@@ -166,7 +166,7 @@ a:hover {
 
 .columnCaptions span:last-child{
 	float: right;
-	padding-right: 80px;
+	padding-left: 125px;
 }
 
 
@@ -214,7 +214,6 @@ a:hover {
 	font-size :18px;
 	font-weight: bold;
 	float: right;
-	left:10px;
 }
 
 
@@ -359,12 +358,12 @@ a:hover {
 	}
 
 	.columnCaptions span{
-		padding: 0 21px 0 0;
+		padding: 0 28px 0 0;
 	}
 
 	.columnCaptions span:last-child{
 		float: right;
-		padding-right: 42px;
+		padding-left: 260px;
 	}
 
 	.rows{
@@ -373,7 +372,6 @@ a:hover {
 
 	.quantity{	
 		width: 23px;
-		padding-right: 40px !important;
 	}
 
 	.popbtn{
@@ -385,7 +383,7 @@ a:hover {
 
 	.price{	
 		position: absolute;
-		right: 42px;
+		right: 0px;
 	}
 
 	.totals{

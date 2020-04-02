@@ -226,7 +226,7 @@ render() {
 									<div className="col-md-4">
 										<div className="form-group">
 											<span className="form-label">Guest</span>
-											<select id='guest' className="form-control">
+											<select size='1' id='guest' className="form-control">
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
@@ -239,7 +239,7 @@ render() {
 									<div className="col-md-4">
 										<div className="form-group">
 											<span className="form-label">Travel className</span>
-											<select id='class' className="form-control">
+											<select size='1' id='class' className="form-control">
 												<option value='Eco_left'>Economy class</option>
 												<option value='Bs_left'>Business class</option>
 												<option value='F_left'>First class</option>

@@ -6,10 +6,16 @@ class App extends React.Component{
       this.state = {...this.props.location.state,
         listFlight:[],
         listFlight_Return:[],
+        priceDepart:0,
+        priceReturn:0,
         flight_select_depart:'',
         flight_select_return:'',
         return:false,
-        redirect:false
+        redirect:false,
+        take_off_depart:'',
+        take_off_return:'',
+        landing_depart:'',
+        landing_return:'',
         
     }
       
@@ -54,13 +60,13 @@ class App extends React.Component{
                 let children =[]
                 let num = flight.id
                 children.push(<span className="quantity" key={num}>{flight.id}</span>)
-                children.push(<span className="itemName" key={flight.take_off}>{flight.take_off+'------------------>'+flight.landing}</span>)
+                children.push(<span className="itemName" key={flight.take_off}>{flight.take_off+'------->'+flight.landing}</span>)
                 children.push(<span className="price"  key={flight.price}>{flight.price+' ฿'}</span>)
                 if(num===this.state.flight_select_depart){
-                    li.push(<li key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_depart:flight.id})}>{children}</li>)
+                    li.push(<li key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_depart:flight.id,take_off_depart:flight.take_off,landing_depart:flight.landing,priceDepart:parseInt(flight.price)})}>{children}</li>)
                 }
                 else{
-                    li.push(<li key={num} className="row rows"  onClick={()=>{this.setState({flight_select_depart:num})}}>{children}</li>)
+                    li.push(<li key={num} className="row rows"  onClick={()=>{this.setState({flight_select_depart:num,take_off_depart:flight.take_off,landing_depart:flight.landing,priceDepart:parseInt(flight.price)})}}>{children}</li>)
                 }
                 
           }
@@ -72,13 +78,13 @@ class App extends React.Component{
                 let children =[]
                 let num = flight.id
                 children.push(<span className="quantity" key={num}>{flight.id}</span>)
-                children.push(<span className="itemName" key={flight.take_off}>{flight.take_off+'------------------>'+flight.landing}</span>)
+                children.push(<span className="itemName" key={flight.take_off}>{flight.take_off+'------->'+flight.landing}</span>)
                 children.push(<span className="price"  key={flight.price}>{flight.price+' ฿'}</span>)
                 if(num===this.state.flight_select_return){
-                    li.push(<li key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_return:flight.id})}>{children}</li>)
+                    li.push(<li key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_return:flight.id,take_off_return:flight.take_off,landing_return:flight.landing,priceReturn:parseInt(flight.price)})}>{children}</li>)
                 }
                 else{
-                    li.push(<li key={num} className="row rows"  onClick={()=>{this.setState({flight_select_return:num})}}>{children}</li>)
+                    li.push(<li key={num} className="row rows"  onClick={()=>{this.setState({flight_select_return:num,take_off_return:flight.take_off,landing_return:flight.landing,priceReturn:parseInt(flight.price)})}}>{children}</li>)
                 }
                 
           }
@@ -113,25 +119,26 @@ class App extends React.Component{
             return <Redirect to='/' />
         }
         else if (this.state.redirect && this.state.IsOneway){
-            const {Depart,Guest,Class,IsOneway,flight_select_depart} = this.state
+            const {Depart,Guest,Class,IsOneway,flight_select_depart,take_off_depart,landing_depart,From,To,priceDepart} = this.state
             return <Redirect to={{
                 pathname: '/Information',
-                state: {Depart,Guest,Class,IsOneway,flight_select_depart}
+                state: {Depart,Guest,Class,IsOneway,flight_select_depart,take_off_depart,landing_depart,From,To,priceDepart}
             }}
           />
         }
         else if (this.state.redirect && !this.state.IsOneway) {
-            const {Depart,Return,Guest,Class,IsOneway,flight_select_depart,flight_select_return} = this.state
+            const {Depart,Return,Guest,Class,IsOneway,flight_select_depart,flight_select_return,take_off_depart,landing_depart,take_off_return,landing_return,From,To,priceDepart,priceReturn} = this.state
             return <Redirect to={{
                 pathname: '/Information',
-                state: {Depart,Return,Guest,Class,IsOneway,flight_select_depart,flight_select_return}
+                state: {Depart,Return,Guest,Class,IsOneway,flight_select_depart,flight_select_return,take_off_depart,take_off_return,landing_depart,landing_return,From,To,priceDepart,priceReturn}
             }}
           />
         }
         return(
-            <div>
+            <div >
                 {!this.state.return?
                     <div className="container text-center">
+                        <div className='row'>
                     <div className="col-md-5 col-sm-12">
                         <div className="bigcart"></div>
                         {
@@ -152,7 +159,7 @@ class App extends React.Component{
                             <li className="row list-inline columnCaptions">
                                 <span>Flight</span>
                                 <span>Time</span>
-                                <span>Price</span>
+                                <span>Price per Person</span>
                             </li>
                             {this.handlerenderFlight_depart(this.state.listFlight)}
                             <li className="rows totals">
@@ -160,12 +167,14 @@ class App extends React.Component{
                             </li>
                         </ul>
                     </div>
+                    </div>
                 </div>
                 :null
                     }
                 {
                     this.state.return?
                     <div className="container text-center">
+                        <div className='row'>
                     <div className="col-md-5 col-sm-12">
                         <div className="bigcart"></div>
                         {
@@ -186,7 +195,7 @@ class App extends React.Component{
                             <li className="row list-inline columnCaptions">
                                 <span>Flight</span>
                                 <span>Time</span>
-                                <span>Price</span>
+                                <span>Price per Person</span>
                             </li>
                             {this.handlerenderFlight_return(this.state.listFlight_Return)}
                             <li className="rows totals">
@@ -194,10 +203,18 @@ class App extends React.Component{
                             </li>
                         </ul>
                     </div>
+                    </div>
                 </div>
                     :null
                 }
+                <nav className="navbar fixed-bottom navbar-light" style={{backgroundColor:'#4ea6bc'}}>
+  <p className="navbar-brand">LNWJ1998 AIRLINE</p>
+  <form className="form-inline">
+            <h3 style={{color:'white'}}>Totals: {(this.state.priceDepart+this.state.priceReturn)*parseInt(this.state.Guest)} ฿</h3>
+  </form>
+</nav>
             </div>
+
         );
     }
 }
