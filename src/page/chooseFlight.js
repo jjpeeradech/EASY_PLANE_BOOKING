@@ -55,40 +55,40 @@ class App extends React.Component{
          })
     }
     handlerenderFlight_depart(data){
-        let li = []
+        let Div = []
         for(let flight of data){
                 let children =[]
                 let num = flight.id
-                children.push(<span className="quantity" key={num}>{flight.id}</span>)
-                children.push(<span className="itemName" key={flight.take_off}>{flight.take_off+'------->'+flight.landing}</span>)
-                children.push(<span className="price"  key={flight.price}>{flight.price+' ฿'}</span>)
+                children.push(<div className="quantity col-3" style={{textAlign:'center'}} key={num}>{flight.id}</div>)
+                children.push(<div className="itemName col-6" style={{textAlign:'center'}} key={flight.take_off}>{flight.take_off+'------->'+flight.landing}</div>)
+                children.push(<div className="price col-3" style={{textAlign:'center'}} key={flight.price}>{flight.price+'฿'}</div>)
                 if(num===this.state.flight_select_depart){
-                    li.push(<li key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_depart:flight.id,take_off_depart:flight.take_off,landing_depart:flight.landing,priceDepart:parseInt(flight.price)})}>{children}</li>)
+                    Div.push(<div key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_depart:flight.id,take_off_depart:flight.take_off,landing_depart:flight.landing,priceDepart:parseInt(flight.price)})}>{children}</div>)
                 }
                 else{
-                    li.push(<li key={num} className="row rows"  onClick={()=>{this.setState({flight_select_depart:num,take_off_depart:flight.take_off,landing_depart:flight.landing,priceDepart:parseInt(flight.price)})}}>{children}</li>)
+                    Div.push(<div key={num} className="row rows"  onClick={()=>{this.setState({flight_select_depart:num,take_off_depart:flight.take_off,landing_depart:flight.landing,priceDepart:parseInt(flight.price)})}}>{children}</div>)
                 }
                 
           }
-          return li
+          return Div
     }
     handlerenderFlight_return(data){
-        let li = []
+        let Div = []
         for(let flight of data){
                 let children =[]
                 let num = flight.id
-                children.push(<span className="quantity" key={num}>{flight.id}</span>)
-                children.push(<span className="itemName" key={flight.take_off}>{flight.take_off+'------->'+flight.landing}</span>)
-                children.push(<span className="price"  key={flight.price}>{flight.price+' ฿'}</span>)
+                children.push(<div className="quantity col-3" style={{textAlign:'center'}} key={num}>{flight.id}</div>)
+                children.push(<div className="itemName col-6" style={{textAlign:'center'}} key={flight.take_off}>{flight.take_off+'------->'+flight.landing}</div>)
+                children.push(<div className="price col-3" style={{textAlign:'center'}}  key={flight.price}>{flight.price+'฿'}</div>)
                 if(num===this.state.flight_select_return){
-                    li.push(<li key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_return:flight.id,take_off_return:flight.take_off,landing_return:flight.landing,priceReturn:parseInt(flight.price)})}>{children}</li>)
+                    Div.push(<div key={num} className="row rows"  style={{backgroundColor:'#4ea6bc'}} onClick={()=>this.setState({flight_select_return:flight.id,take_off_return:flight.take_off,landing_return:flight.landing,priceReturn:parseInt(flight.price)})}>{children}</div>)
                 }
                 else{
-                    li.push(<li key={num} className="row rows"  onClick={()=>{this.setState({flight_select_return:num,take_off_return:flight.take_off,landing_return:flight.landing,priceReturn:parseInt(flight.price)})}}>{children}</li>)
+                    Div.push(<div key={num} className="row rows"  onClick={()=>{this.setState({flight_select_return:num,take_off_return:flight.take_off,landing_return:flight.landing,priceReturn:parseInt(flight.price)})}}>{children}</div>)
                 }
                 
           }
-          return li
+          return Div
     }
     handleDepart(){
         console.log(this.state.flight_select_depart)
@@ -138,9 +138,10 @@ class App extends React.Component{
             <div >
                 {!this.state.return?
                     <div className="container text-center">
-                        <div className='row'>
-                    <div className="col-md-5 col-sm-12">
                         <div className="bigcart"></div>
+                        <div className='row'>
+                    <div className="col-lg-5">
+                        
                         {
                             !this.state.IsOneway?
                             <div>
@@ -154,18 +155,16 @@ class App extends React.Component{
                         </p>
                     </div>
                     
-                    <div className="col-md-7 col-sm-12 text-left">
-                        <ul>
-                            <li className="row list-inline columnCaptions">
-                                <span>Flight</span>
-                                <span>Time</span>
-                                <span>Price per Person</span>
-                            </li>
-                            {this.handlerenderFlight_depart(this.state.listFlight)}
-                            <li className="rows totals">
-                                <span className="order"> <span className="text-center" onClick={()=>this.handleDepart()}>Book Now</span></span>
-                            </li>
-                        </ul>
+                    <div className="col-lg-7 text-left">
+                        <div className="row list-inline columnCaptions">
+                            <div className="col-3" style={{textAlign:'center'}}>Flight</div>
+                            <div className="col-6" style={{textAlign:'center'}}>Time</div>
+                            <div className="col-3" style={{textAlign:'center'}}>Price per Person</div>
+                        </div>
+                        {this.handlerenderFlight_depart(this.state.listFlight)}
+                        <div className="totals">
+                            <span className="order"> <span className="text-center" onClick={()=>this.handleDepart()}>Book Now</span></span>
+                        </div>
                     </div>
                     </div>
                 </div>
@@ -174,9 +173,9 @@ class App extends React.Component{
                 {
                     this.state.return?
                     <div className="container text-center">
-                        <div className='row'>
-                    <div className="col-md-5 col-sm-12">
                         <div className="bigcart"></div>
+                        <div className='row'>
+                    <div className="col-lg-5 col-sm-12">
                         {
                             !this.state.IsOneway?
                             <div>
@@ -190,18 +189,16 @@ class App extends React.Component{
                         </p>
                     </div>
                     
-                    <div className="col-md-7 col-sm-12 text-left">
-                        <ul>
-                            <li className="row list-inline columnCaptions">
-                                <span>Flight</span>
-                                <span>Time</span>
-                                <span>Price per Person</span>
-                            </li>
-                            {this.handlerenderFlight_return(this.state.listFlight_Return)}
-                            <li className="rows totals">
-                                <span className="order"> <span className="text-center" onClick={()=>this.handleReturn()}>Book Now</span></span>
-                            </li>
-                        </ul>
+                    <div className="col-lg-7 text-left">
+                        <div className="row list-inline columnCaptions">
+                            <div className="col-3" style={{textAlign:'center'}}>Flight</div>
+                            <div className="col-6" style={{textAlign:'center'}}>Time</div>
+                            <div className="col-3" style={{textAlign:'center'}}>Price per Person</div>
+                        </div>
+                        {this.handlerenderFlight_return(this.state.listFlight_Return)}
+                        <div className="totals">
+                            <span className="order"> <span className="text-center" onClick={()=>this.handleReturn()}>Book Now</span></span>
+                        </div>
                     </div>
                     </div>
                 </div>

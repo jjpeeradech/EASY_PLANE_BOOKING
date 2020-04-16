@@ -104,7 +104,7 @@ placefilter(x){
   }
 }
 summitflight(){
-  
+  console.log(this.state)
   var getFrom = document.getElementById("From").value;
   var getTo = document.getElementById('To').value;
   var getDepart = document.getElementById('depart').value;
@@ -148,13 +148,13 @@ render() {
 		<div className="section-center">
 			<div className="container">
 				<div className="row">
-					<div className="col-md-4">
+					<div className="col-lg-4">
 						<div className="booking-cta">
 							<h1>Lnw J1998 Airlines</h1>
               <p>by easy plane booking</p>
 						</div>
 					</div>
-					<div className="col-md-7 col-md-offset-1">
+					<div className="col-lg-7 col-lg-offset-1">
 						<div className="booking-form">
               <form onSubmit={()=>this.summitflight()}>
 								<div className="form-group">
