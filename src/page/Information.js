@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 class App extends React.Component{
     constructor(props) {
       super(props)
@@ -25,7 +26,8 @@ class App extends React.Component{
           Address:'',
           Address2:'',
           Zip:'',
-          Payment:''
+          Payment:'',
+          back:false
         }
     }
     componentDidMount(){
@@ -167,8 +169,12 @@ class App extends React.Component{
       console.log(tmp)
     }
     render(){
+      if(this.props.location.state===undefined || this.state.back){
+        return <Redirect to='/' />
+    }
         return(
           <div className="container">
+            <h1 style={{textAlign:'left',marginTop:30,cursor:'pointer'}} onClick={()=>this.setState({back:true})}>&#x2190;</h1>
           <div className="py-5 text-center">
             <h2>Booking form</h2>
             <p className="lead">Please fill your information correctly to mack a booking for you</p>
@@ -178,7 +184,7 @@ class App extends React.Component{
             <div className="col-md-4 order-md-2 mb-4">
               <h4 className="d-flex justify-content-between align-items-center mb-3">
                 <span className="text-muted">Your Ticket</span>
-                 <span className="badge badge-secondary badge-pill">{this.state.isOneway?1:2}</span>
+                 <span className="badge badge-secondary badge-pill">{this.state.IsOneway?1:2}</span>
               </h4>
               <ul className="list-group mb-3">
                 <li className="list-group-item d-flex justify-content-between lh-condensed">
@@ -189,7 +195,7 @@ class App extends React.Component{
                     <span className="text-muted">{this.formatNumber((this.state.priceDepart*this.state.Guest))+"฿"}</span>
                 </li>
                 {
-                  !this.state.isOneway?
+                  !this.state.IsOneway?
                   <li className="list-group-item d-flex justify-content-between lh-condensed">
                   <div>
                     <h6 className="my-0">{this.state.flight_select_return+' '+this.state.To.split(",")[1]+' to '+this.state.From.split(',')[1]+' x '+this.state.Guest}</h6>

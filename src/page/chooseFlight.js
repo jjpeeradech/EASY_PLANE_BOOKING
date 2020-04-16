@@ -16,7 +16,7 @@ class App extends React.Component{
         take_off_return:'',
         landing_depart:'',
         landing_return:'',
-        
+        back:false
     }
       
     }
@@ -115,7 +115,7 @@ class App extends React.Component{
         }
     }
     render(){
-        if(this.props.location.state===undefined){
+        if(this.props.location.state===undefined || this.state.back){
             return <Redirect to='/' />
         }
         else if (this.state.redirect && this.state.IsOneway){
@@ -138,6 +138,7 @@ class App extends React.Component{
             <div >
                 {!this.state.return?
                     <div className="container text-center">
+                        <h1 style={{textAlign:'left',marginTop:30,cursor:'pointer'}} onClick={()=>this.setState({back:true})}>&#x2190;</h1>
                         <div className="bigcart"></div>
                         <div className='row'>
                     <div className="col-lg-5">
@@ -146,6 +147,7 @@ class App extends React.Component{
                             !this.state.IsOneway?
                             <div>
                                 <h1>Depart</h1>
+                                
                                 </div>
                                 :null
                         }
@@ -173,6 +175,7 @@ class App extends React.Component{
                 {
                     this.state.return?
                     <div className="container text-center">
+                        <h1 style={{textAlign:'left',marginTop:30,cursor:'pointer'}} onClick={()=>this.setState({back:true})}>&#x2190;</h1>
                         <div className="bigcart"></div>
                         <div className='row'>
                     <div className="col-lg-5 col-sm-12">
