@@ -18,6 +18,7 @@ class App extends React.Component{
         sex.push('')
       }
       this.state = {...this.props.location.state,
+          infoData:{},
           firstName:firstName,
           lastName:lastName,
           birth:birth,
@@ -27,7 +28,8 @@ class App extends React.Component{
           Address2:'',
           Zip:'',
           Payment:'',
-          back:false
+          back:false,
+          redirect:false
         }
     }
     componentDidMount(){
@@ -114,7 +116,7 @@ class App extends React.Component{
     handleCheckout(e){
       e.preventDefault();
       let tmpData = []
-      let tmp =[]
+      let tmp = {}
       let tmpEmail = document.getElementById('email').value
       let tmpAddress = document.getElementById('address').value
       let tmpZip =document.getElementById('zip').value
@@ -135,43 +137,64 @@ class App extends React.Component{
         var tmpdate2 = this.state.Return
         tmpdate2 = tmpdate2.split('-')
         var date2 = tmpdate2[2]+tmpdate2[1]+tmpdate2[0]
-        tmp.push({personal_data:tmpData,
-          Email:tmpEmail,
-          Address:tmpAddress,
-          Zip:tmpZip,
-          payment:{type:this.state.Payment,name:ccName,number:ccNumber,expiration:ccExpiration,cvv:ccCvv},
-          flight_depart:this.state.flight_select_depart,
-          flight_return:this.state.flight_select_return,
-          date_depart:date,
-          date_return:date2,
-          Class:this.state.Class
+        this.setState({
+          infoData:{
+            personal_data:tmpData,
+            Email:tmpEmail,
+            Address:tmpAddress,
+            Zip:tmpZip,
+            payment:{type:this.state.Payment,name:ccName,number:ccNumber,expiration:ccExpiration,cvv:ccCvv},
+            flight_depart:this.state.flight_select_depart,
+            flight_return:this.state.flight_select_return,
+            date_depart:date,
+            date_return:date2,
+            Class:this.state.Class
+          },
+          redirect:true
         })
       }
       else{
         var tmpdate3 = this.state.Depart
         tmpdate3 = tmpdate3.split('-')
         var date3 = tmpdate3[2]+tmpdate3[1]+tmpdate3[0]
-        tmp.push({personal_data:tmpData,
-          Email:tmpEmail,
-          Address:tmpAddress,
-          Zip:tmpZip,
-          payment:{type:this.state.Payment,name:ccName,number:ccNumber,expiration:ccExpiration,cvv:ccCvv},
-          flight_depart:this.state.flight_select_depart,
-          date_depart:date3,
-          Class:this.state.Class
+        this.setState({
+          infoData:{
+            personal_data:tmpData,
+            Email:tmpEmail,
+            Address:tmpAddress,
+            Zip:tmpZip,
+            payment:{type:this.state.Payment,name:ccName,number:ccNumber,expiration:ccExpiration,cvv:ccCvv},
+            flight_depart:this.state.flight_select_depart,
+            date_depart:date3,
+            Class:this.state.Class
+          },
+          redirect:true
         })
       }
-      fetch('/booking',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(tmp[0])
-      })
-      console.log(tmp)
+      // fetch('/booking',{
+      //   method:'POST',
+      //   headers:{'Content-Type':'application/json'},
+      //   body:JSON.stringify(tmp[0])
+      // })
+
     }
     render(){
       if(this.props.location.state===undefined || this.state.back){
         return <Redirect to='/' />
-    }
+      }else if (this.state.redirect && this.state.isOneway){
+          return <Redirect to={{
+              pathname: '/Seat',
+              state: {...this.state.infoData, isOneway:true}
+            }}
+          />
+      }
+      else if (this.state.redirect && !this.state.isOneway) {
+          return <Redirect to={{
+              pathname: '/Seat',
+              state: {...this.state.infoData, isOneway:false}
+          }}
+        />
+      }
         return(
           <div className="container">
             <h1 style={{textAlign:'left',marginTop:30,cursor:'pointer'}} onClick={()=>this.setState({back:true})}>&#x2190;</h1>
@@ -184,7 +207,7 @@ class App extends React.Component{
             <div className="col-md-4 order-md-2 mb-4">
               <h4 className="d-flex justify-content-between align-items-center mb-3">
                 <span className="text-muted">Your Ticket</span>
-                 <span className="badge badge-secondary badge-pill">{this.state.IsOneway?1:2}</span>
+                 <span className="badge badge-secondary badge-pill">{this.state.isOneway?1:2}</span>
               </h4>
               <ul className="list-group mb-3">
                 <li className="list-group-item d-flex justify-content-between lh-condensed">
@@ -195,7 +218,7 @@ class App extends React.Component{
                     <span className="text-muted">{this.formatNumber((this.state.priceDepart*this.state.Guest))+"฿"}</span>
                 </li>
                 {
-                  !this.state.IsOneway?
+                  !this.state.isOneway?
                   <li className="list-group-item d-flex justify-content-between lh-condensed">
                   <div>
                     <h6 className="my-0">{this.state.flight_select_return+' '+this.state.To.split(",")[1]+' to '+this.state.From.split(',')[1]+' x '+this.state.Guest}</h6>

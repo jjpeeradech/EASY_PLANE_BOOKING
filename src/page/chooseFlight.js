@@ -21,6 +21,7 @@ class App extends React.Component{
       
     }
     componentDidMount(){
+        console.log(this.state.isOneway)
         if(this.props.location.state){
             this.getFlight()
             this.getFlightReturn()
@@ -93,7 +94,7 @@ class App extends React.Component{
     handleDepart(){
         console.log(this.state.flight_select_depart)
         if(this.state.flight_select_depart!==''){
-            if(this.state.IsOneway){
+            if(this.state.isOneway){
                 this.setState({redirect:true})
             }
             else{
@@ -118,19 +119,19 @@ class App extends React.Component{
         if(this.props.location.state===undefined || this.state.back){
             return <Redirect to='/' />
         }
-        else if (this.state.redirect && this.state.IsOneway){
-            const {Depart,Guest,Class,IsOneway,flight_select_depart,take_off_depart,landing_depart,From,To,priceDepart} = this.state
+        else if (this.state.redirect && this.state.isOneway){
+            const {Depart,Guest,Class,isOneway,flight_select_depart,take_off_depart,landing_depart,From,To,priceDepart} = this.state
             return <Redirect to={{
                 pathname: '/Information',
-                state: {Depart,Guest,Class,IsOneway,flight_select_depart,take_off_depart,landing_depart,From,To,priceDepart}
+                state: {Depart,Guest,Class,isOneway,flight_select_depart,take_off_depart,landing_depart,From,To,priceDepart}
             }}
           />
         }
-        else if (this.state.redirect && !this.state.IsOneway) {
-            const {Depart,Return,Guest,Class,IsOneway,flight_select_depart,flight_select_return,take_off_depart,landing_depart,take_off_return,landing_return,From,To,priceDepart,priceReturn} = this.state
+        else if (this.state.redirect && !this.state.isOneway) {
+            const {Depart,Return,Guest,Class,isOneway,flight_select_depart,flight_select_return,take_off_depart,landing_depart,take_off_return,landing_return,From,To,priceDepart,priceReturn} = this.state
             return <Redirect to={{
                 pathname: '/Information',
-                state: {Depart,Return,Guest,Class,IsOneway,flight_select_depart,flight_select_return,take_off_depart,take_off_return,landing_depart,landing_return,From,To,priceDepart,priceReturn}
+                state: {Depart,Return,Guest,Class,isOneway,flight_select_depart,flight_select_return,take_off_depart,take_off_return,landing_depart,landing_return,From,To,priceDepart,priceReturn}
             }}
           />
         }
@@ -144,7 +145,7 @@ class App extends React.Component{
                     <div className="col-lg-5">
                         
                         {
-                            !this.state.IsOneway?
+                            !this.state.isOneway?
                             <div>
                                 <h1>Depart</h1>
                                 
@@ -180,7 +181,7 @@ class App extends React.Component{
                         <div className='row'>
                     <div className="col-lg-5 col-sm-12">
                         {
-                            !this.state.IsOneway?
+                            !this.state.isOneway?
                             <div>
                                 <h1>Return</h1>
                                 </div>
@@ -208,11 +209,11 @@ class App extends React.Component{
                     :null
                 }
                 <nav className="navbar fixed-bottom navbar-light" style={{backgroundColor:'#4ea6bc'}}>
-  <p className="navbar-brand">LNWJ1998 AIRLINE</p>
-  <form className="form-inline">
-            <h3 style={{color:'white'}}>Totals: {(this.state.priceDepart+this.state.priceReturn)*parseInt(this.state.Guest)} ฿</h3>
-  </form>
-</nav>
+                    <p className="navbar-brand">LNWJ1998 AIRLINE</p>
+                    <form className="form-inline">
+                                <h3 style={{color:'white'}}>Totals: {(this.state.priceDepart+this.state.priceReturn)*parseInt(this.state.Guest)} ฿</h3>
+                    </form>
+                </nav>
             </div>
 
         );

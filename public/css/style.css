@@ -12,7 +12,15 @@
 	transform: translateY(-50%);
 }
 
-#booking {
+#booking , .bg-plane {
+	font-family: 'Lato', sans-serif;
+	background-image: url('../img/background.jpg');
+	background-size: cover;
+	background-position: center;
+	color: #191a1e;
+	min-height: 100vh;
+}
+#chooseSeat{
 	font-family: 'Lato', sans-serif;
 	background-image: url('../img/background.jpg');
 	background-size: cover;

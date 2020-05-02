@@ -7,7 +7,7 @@ class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      IsOneway:false,
+      isOneway:false,
       IsrecieveFlight:false,
       showdropdownTo:false,
       showdropdownFrom:false,
@@ -110,7 +110,7 @@ summitflight(){
   var getDepart = document.getElementById('depart').value;
   var getGuest = document.getElementById('guest').value;
   var getClass = document.getElementById('class').value;
-  if(!this.state.IsOneway){
+  if(!this.state.isOneway){
     var getReturn = document.getElementById('return').value;
     this.setState({
       From:getFrom,
@@ -135,10 +135,10 @@ summitflight(){
 }
 render() {
   if(this.state.IsRedirect){  
-    const {From, To, Depart,Return,Guest,Class,IsOneway} = this.state
+    const {From, To, Depart,Return,Guest,Class,isOneway} = this.state
     return <Redirect to={{
       pathname: '/Flight',
-      state: {From, To, Depart,Return,Guest,Class,IsOneway}
+      state: {From, To, Depart,Return,Guest,Class,isOneway}
   }}
 />
   }
@@ -160,11 +160,11 @@ render() {
 								<div className="form-group">
 									<div className="form-checkbox">
 										<label htmlFor="roundtrip">
-											<input type="radio" id="roundtrip" name="flight-type" checked={!this.state.IsOneway} onChange={()=>this.setState({IsOneway:false})}/>
+											<input type="radio" id="roundtrip" name="flight-type" checked={!this.state.isOneway} onChange={()=>this.setState({isOneway:false})}/>
 											<span></span>Roundtrip
 										</label>
 										<label htmlFor="one-way">
-											<input type="radio" id="one-way" name="flight-type" onChange={()=>this.setState({IsOneway:true})}/>
+											<input type="radio" id="one-way" name="flight-type" onChange={()=>this.setState({isOneway:true})}/>
 											<span></span>One way
 										</label>
 									</div>
@@ -212,7 +212,7 @@ render() {
 										</div>
 									</div>
                   {
-                    !this.state.IsOneway?
+                    !this.state.isOneway?
 									<div className="col-md-6">
 										<div className="form-group">
 											<span className="form-label">Returning</span>
