@@ -93,15 +93,18 @@ placefilter(x){
   var input = document.getElementById(x);
   var filter = input.value.toUpperCase();
   var div = document.getElementById("dropdown");
-  var a = div.getElementsByTagName("a");
-  for (var i = 0; i < a.length; i++) {
-    var txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
+  if(div!=null){
+    var a = div.getElementsByTagName("a");
+    for (var i = 0; i < a.length; i++) {
+      var txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
+      }
     }
   }
+
 }
 summitflight(){
   console.log(this.state)
