@@ -1,0 +1,5 @@
+1. ติดตั้ง node.js https://nodejs.org/en/
+2. เปิด terminal
+3. cd ไปที่โฟลเดอร์ที่โค้ดอยู่
+4. พิมพ์ npm install บน terminal
+5. พิมพ์ npm start เพื่อรัน
